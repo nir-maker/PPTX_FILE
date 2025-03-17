@@ -4,29 +4,93 @@
   <meta charset="UTF-8">
   <title>העלאת קובץ PPTX ועיבוד טקסט</title>
   <style>
-    /* עיצוב לתצוגת טקסט מימין לשמאל */
-    .container {
+    /* סגנונות כלליים */
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #74ABE2, #5563DE);
+      color: #333;
       direction: rtl;
-      text-align: right;
-      margin-top: 20px;
-      font-family: Arial, sans-serif;
+      text-align: center;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
-    h2 {
-      margin-bottom: 5px;
+    
+    .upload-container {
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      padding: 30px 20px;
+      width: 90%;
+      max-width: 600px;
     }
-    p {
-      background: #f1f1f1;
+    
+    h1 {
+      color: #5563DE;
+      margin-bottom: 20px;
+      text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.15);
+    }
+    
+    input[type="file"] {
       padding: 10px;
+      border: 2px solid #5563DE;
       border-radius: 4px;
+      cursor: pointer;
+      font-size: 16px;
+      margin-bottom: 20px;
+      width: 100%;
+    }
+    
+    /* כפתור במידה ורוצים להשתמש בו בעתיד */
+    .btn {
+      background: #5563DE;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      font-size: 16px;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+    
+    .btn:hover {
+      background: #4351B5;
+    }
+    
+    /* עיצוב תצוגת השקפים */
+    .slide-card {
+      background: #f9f9f9;
+      border-radius: 6px;
+      padding: 15px;
+      margin: 15px 0;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+      text-align: right;
+    }
+    
+    .slide-card h2 {
+      margin: 0 0 10px;
+      font-size: 1.2em;
+      color: #5563DE;
+    }
+    
+    .slide-card p {
+      margin: 0;
+      font-size: 1em;
+      line-height: 1.5;
     }
   </style>
 </head>
 <body>
-  <h1>העלאת קובץ PPTX</h1>
-  <input type="file" id="pptxInput" accept=".pptx">
-  <div class="container" id="output"></div>
+  <div class="upload-container">
+    <h1>העלאת קובץ PPTX</h1>
+    <input type="file" id="pptxInput" accept=".pptx">
+    <div id="output"></div>
+  </div>
 
-  <!-- טעינת ספריית JSZip לעבודה עם קובץ PPTX (קובץ PPTX הוא למעשה ZIP) -->
+  <!-- טעינת ספריית JSZip לעבודה עם קובץ PPTX (ה-PPTX הוא למעשה ZIP) -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.7.1/jszip.min.js"></script>
   <script>
     document.getElementById('pptxInput').addEventListener('change', function(e) {
@@ -61,6 +125,7 @@
             outputDiv.innerHTML = "";
             slideTexts.forEach(function(text, index) {
               const slideDiv = document.createElement("div");
+              slideDiv.className = "slide-card";
               slideDiv.innerHTML = "<h2>שקף " + (index+1) + "</h2><p>" + text + "</p>";
               outputDiv.appendChild(slideDiv);
             });
