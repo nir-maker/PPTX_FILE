@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="he">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>קוד PPTX ל-RTL והעלאה ל-GitHub</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      direction: rtl;
+      margin: 20px;
+      line-height: 1.6;
+    }
+    pre {
+      background: #f4f4f4;
+      padding: 10px;
+      border: 1px solid #ddd;
+      overflow-x: auto;
+    }
+    code {
+      font-family: Consolas, monospace;
+    }
+    h1, h2 {
+      color: #333;
+    }
+  </style>
+</head>
+<body>
+  <h1>קוד PPTX ל-RTL והעלאה ל-GitHub</h1>
+
+  <section>
+    <h2>קוד Python להמרת טקסט ב-PPTX</h2>
+    <p>להלן דוגמה לקוד בפייתון המשתמש בספריית <code>python-pptx</code> לטעינת קובץ PPTX, מעבר על כל השקופיות והצורות המכילות טקסט, והגדרת כיוון הטקסט לימין-שמאל.</p>
+    <pre><code>from pptx import Presentation
+
+# קובץ המקור וקובץ היעד
+input_pptx = 'original.pptx'
+output_pptx = 'rtl_presentation.pptx'
+
+# טעינת המצגת
+prs = Presentation(input_pptx)
+
+# מעבר על כל השקופיות והצורות עם טקסט
+for slide in prs.slides:
+    for shape in slide.shapes:
+        if shape.has_text_frame:
+            for paragraph in shape.text_frame.paragraphs:
+                # הוספת הגדרה לכיוון טקסט לימין לשמאל (בידי)
+                pPr = paragraph._p.get_or_add_pPr()
+                pPr.set('bidi', '1')
+
+# שמירת המצגת החדשה
+prs.save(output_pptx)
+print("המצגת נשמרה כ-", output_pptx)</code></pre>
+  </section>
+
+  <section>
+    <h2>העלאת הקוד ל-GitHub</h2>
+    <p>כדי להעלות את הקוד ל-GitHub, ניתן לבצע את הפעולות הבאות בטרמינל:</p>
+    <ol>
+      <li>נווט לתיקיית הפרויקט והפעל את הפקודה:
+        <pre><code>git init</code></pre>
+      </li>
+      <li>הוסף את כל הקבצים למאגר:
+        <pre><code>git add .</code></pre>
+      </li>
+      <li>בצע commit עם הודעה:
+        <pre><code>git commit -m "Initial commit - הוספת קוד PPTX ל-RTL"</code></pre>
+      </li>
+      <li>הגדר את המאגר המרוחק (החלף <code>username</code> ו-<code>repository</code> בפרטי המאגר שלך):
+        <pre><code>git remote add origin https://github.com/username/repository.git</code></pre>
+      </li>
+      <li>העלה את הקוד למאגר:
+        <pre><code>git push -u origin master</code></pre>
+        <p>אם המאגר שלך משתמש ב-branch בשם <code>main</code>, יש להשתמש ב-<code>git push -u origin main</code>.</p>
+      </li>
+    </ol>
+  </section>
+</body>
+</html>
